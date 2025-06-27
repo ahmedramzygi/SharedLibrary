@@ -1,7 +1,7 @@
-#!/usr/bin/env groovy
-
-import com.example.Docker
-
 def call(String imageName) {
-    return new Docker(this).buildDockerImage(imageName)
+    if (!imageName?.trim()) {
+        error "Image name must be provided to buildImage"
+    }
+    echo "Building the Docker image: ${imageName}"
+    sh "docker build -t ${imageName} ."
 }

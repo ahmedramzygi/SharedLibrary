@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 
-import com.example.Docker
-
 def call(String imageName) {
-    return new Docker(this).dockerPush(imageName)
+    if (!imageName?.trim()) {
+        error "Image name must be provided to dockerPush"
+    }
+    echo "Pushing Docker image: ${imageName}"
+    sh "docker push ${imageName}"
 }
